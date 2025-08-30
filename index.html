@@ -4,10 +4,235 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Para una mujer especial</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Quicksand:wght@300..700&display=swap");
+
+    *,
+    *:before,
+    *:after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Quicksand", sans-serif;
+    }
+
+    body {
+      background: linear-gradient(145deg, #2d2e3f 0%, #0c0c13 76%);
+      min-height: 100vh;
+      overflow-x: hidden;
+      perspective: 1000px;
+    }
+
+    .heart-background {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23f7659150' d='M10,3.3C8.5-1.1,0.8-0.8,0.8,4.8c0,5.6,9.2,11.2,9.2,11.2s9.2-5.6,9.2-11.2C19.2-0.8,11.5-1.1,10,3.3z'/%3E%3C/svg%3E");
+      z-index: -1;
+      opacity: 0.3;
+    }
+
+    .floating-hearts {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .main-container {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    /* CARRUSEL - Adaptado para móviles */
+    .carousel-container {
+      width: 100%;
+      height: 50vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    #drag-container {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      transform-style: preserve-3d;
+    }
+
+    #spin-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-style: preserve-3d;
+      transform: translate(-50%, -50%);
+    }
+
+    #spin-container img {
+      position: absolute;
+      width: 180px;
+      height: 240px;
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: none;
+      transform-style: preserve-3d;
+    }
+
+    /* Ground (opcional) */
+    #ground {
+      width: 600px;
+      height: 600px;
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translate(-50%,-50%) rotateX(90deg);
+      background: radial-gradient(circle farthest-side, #9993, transparent);
+    }
+
+    /* CARTA - Adaptada para móviles */
+    .content-container {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .content {
+      width: 100%;
+      padding: 20px;
+      color: #e7e7e7;
+      text-align: justify;
+      background: rgba(13, 10, 11, 0.7);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px rgba(247, 101, 145, 0.2);
+      backdrop-filter: blur(10px);
+    }
+
+    .content h1 {
+      font-family: "Dancing Script", cursive;
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #f76591, #ffc16f);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    .content p {
+      font-size: 1rem;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    .signature {
+      display: block;
+      text-align: right;
+      font-weight: bold;
+      color: #ffc16f;
+      margin-top: 15px;
+    }
+
+    .btn {
+      background: linear-gradient(135deg, #f76591, #ff8e6e);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #fff;
+      width: 100%;
+      outline: 0;
+      border: 0;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(247, 101, 145, 0.4);
+      padding: 14px 20px;
+      margin-top: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      box-shadow: 0 6px 20px rgba(247, 101, 145, 0.6);
+      transform: translateY(-2px);
+    }
+
+    /* Musica centrada */
+    #music-container {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      width: 90%;
+      max-width: 300px;
+    }
+
+    #bg-music {
+      width: 100%;
+    }
+
+    /* Media queries para tablets y pantallas más grandes */
+    @media (min-width: 768px) {
+      .main-container {
+        flex-direction: row;
+        height: 100vh;
+        padding: 0;
+      }
+      
+      .carousel-container {
+        width: 50%;
+        height: 100%;
+        margin-bottom: 0;
+      }
+      
+      .content-container {
+        width: 50%;
+        height: 100%;
+        padding: 40px;
+      }
+      
+      #spin-container img {
+        width: 220px;
+        height: 300px;
+      }
+      
+      .content h1 {
+        font-size: 3rem;
+      }
+      
+      .content p {
+        font-size: 1.1rem;
+      }
+      
+      #music-container {
+        top: 20px;
+        bottom: auto;
+        width: auto;
+      }
+    }
+  </style>
 </head>
 <body>
-  <div class="main-container">
+  <div class="heart-background"></div>
+
+  <!-- Musica centrada -->
+  <div id="music-container">
+    <audio id="bg-music" src="july.mp3" controls autoplay loop></audio>
+  </div>
+
+  <main class="main-container">
+    <!-- Arriba: Carrusel (en móviles) -->
     <div class="carousel-container">
       <div id="drag-container">
         <div id="spin-container">
@@ -20,18 +245,17 @@
         </div>
         <div id="ground"></div>
       </div>
-      <div id="music-container"></div>
     </div>
 
+    <!-- Abajo: Carta (en móviles) -->
     <div class="content-container">
       <div class="content">
         <h1>Para una mujer especial</h1>
         <p>
           Querida amiga, <br>
           Cada día que te voy conociendo un poco más me doy cuenta de lo valiosa que eres. 
-          No solo por tu belleza exterior, que cualquiera puede notar, sino por tu forma de ser, 
-          tu inteligencia y la energía positiva que transmites. Tu sonrisa ilumina los momentos 
-          y tu risa tiene la capacidad de alegrar cualquier día. <br>
+          No solo por tu belleza exterior, sino por tu forma de ser, tu inteligencia y la energía positiva que transmites. 
+          Tu sonrisa ilumina los momentos y tu risa tiene la capacidad de alegrar cualquier día. <br>
           Me alegra mucho poder compartir este inicio de amistad contigo y espero que sigamos 
           construyendo gratos recuerdos.
           <br><br>
@@ -41,8 +265,152 @@
         <button class="btn">Julisa Mora❤️</button>
       </div>
     </div>
-  </div>
+  </main>
+
   <div class="floating-hearts"></div>
-  <script src="script.js"></script>
+  <script>
+    // Variables ajustadas para móviles
+    var radius = window.innerWidth < 768 ? 180 : 280;
+    var autoRotate = true;
+    var rotateSpeed = 20;
+    var imgWidth = window.innerWidth < 768 ? 180 : 220;
+    var imgHeight = window.innerWidth < 768 ? 240 : 300;
+
+    var odrag = document.getElementById('drag-container');
+    var ospin = document.getElementById('spin-container');
+    var aImg = ospin.getElementsByTagName('img');
+    var aEle = [...aImg];
+
+    ospin.style.width = imgWidth + "px";
+    ospin.style.height = imgHeight + "px";
+
+    var ground = document.getElementById('ground');
+    ground.style.width = radius * 3 + "px";
+    ground.style.height = radius * 3 + "px";
+
+    var tX = 0, tY = 10, desX = 0, desY = 0, sX, sY, nX, nY;
+
+    function init(delayTime){
+      for(var i=0;i<aEle.length;i++){
+        aEle[i].style.transform = `rotateY(${i*(360/aEle.length)}deg) translateZ(${radius}px)`;
+        aEle[i].style.transition = `transform 1s`;
+        aEle[i].style.transitionDelay = (delayTime || (aEle.length-i)/4) + 's';
+      }
+    }
+
+    function applyTransform(obj){
+      if(tY>180) tY=180;
+      if(tY<0) tY=0;
+      obj.style.transform = `rotateX(${-tY}deg) rotateY(${tX}deg)`;
+    }
+
+    function playSpin(yes){
+      ospin.style.animationPlayState = yes?'running':'paused';
+    }
+
+    // Animación rotación automática
+    if(autoRotate){
+      let deg = 0;
+      setInterval(()=>{
+        deg += rotateSpeed * 0.017;
+        tX = deg;
+        applyTransform(odrag);
+      },17);
+    }
+
+    // Eventos táctiles para móviles
+    document.addEventListener('touchstart', handleStart, false);
+    document.addEventListener('touchmove', handleMove, false);
+    document.addEventListener('touchend', handleEnd, false);
+
+    var xDown = null;
+    var yDown = null;
+
+    function handleStart(evt) {
+      clearInterval(odrag.timer);
+      const firstTouch = evt.touches[0];
+      xDown = firstTouch.clientX;
+      yDown = firstTouch.clientY;
+    }
+
+    function handleMove(evt) {
+      if (!xDown || !yDown) return;
+      
+      var xUp = evt.touches[0].clientX;
+      var yUp = evt.touches[0].clientY;
+      
+      var xDiff = xDown - xUp;
+      var yDiff = yDown - yUp;
+      
+      tX += xDiff * 0.1;
+      tY += yDiff * 0.1;
+      applyTransform(odrag);
+      
+      xDown = xUp;
+      yDown = yUp;
+    }
+
+    function handleEnd() {
+      odrag.timer = setInterval(()=>{
+        desX *= 0.95; desY *= 0.95;
+        tX += desX*0.1; tY += desY*0.1;
+        applyTransform(odrag);
+        playSpin(false);
+        if(Math.abs(desX)<0.5 && Math.abs(desY)<0.5){
+          clearInterval(odrag.timer);
+          playSpin(true);
+        }
+      },17);
+      xDown = null;
+      yDown = null;
+    }
+
+    // Eventos ratón para desktop
+    document.onpointerdown = function(e){
+      clearInterval(odrag.timer);
+      sX = e.clientX; sY = e.clientY;
+
+      this.onpointermove = function(e){
+        nX = e.clientX; nY = e.clientY;
+        desX = nX - sX;
+        desY = nY - sY;
+        tX += desX*0.1;
+        tY += desY*0.1;
+        applyTransform(odrag);
+        sX = nX; sY = nY;
+      }
+
+      this.onpointerup = function(e){
+        odrag.timer = setInterval(()=>{
+          desX *= 0.95; desY *= 0.95;
+          tX += desX*0.1; tY += desY*0.1;
+          applyTransform(odrag);
+          playSpin(false);
+          if(Math.abs(desX)<0.5 && Math.abs(desY)<0.5){
+            clearInterval(odrag.timer);
+            playSpin(true);
+          }
+        },17);
+        this.onpointermove = this.onpointerup = null;
+      }
+      return false;
+    }
+
+    // Ajustar al redimensionar
+    window.addEventListener('resize', function() {
+      radius = window.innerWidth < 768 ? 180 : 280;
+      imgWidth = window.innerWidth < 768 ? 180 : 220;
+      imgHeight = window.innerWidth < 768 ? 240 : 300;
+      
+      ospin.style.width = imgWidth + "px";
+      ospin.style.height = imgHeight + "px";
+      ground.style.width = radius * 3 + "px";
+      ground.style.height = radius * 3 + "px";
+      
+      init(1);
+    });
+
+    init();
+  </script>
 </body>
 </html>
