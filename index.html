@@ -49,17 +49,19 @@
       flex-direction: column;
       width: 100%;
       min-height: 100vh;
-      padding: 20px;
+      padding: 70px 20px 90px; /* Espacio para la música arriba y abajo */
     }
 
     /* CARRUSEL - Adaptado para móviles */
     .carousel-container {
       width: 100%;
       height: 50vh;
+      min-height: 300px;
       display: flex;
       justify-content: center;
       align-items: center;
       margin-bottom: 20px;
+      perspective: 1200px;
     }
 
     #drag-container {
@@ -75,6 +77,12 @@
       left: 50%;
       transform-style: preserve-3d;
       transform: translate(-50%, -50%);
+      animation: spin 30s infinite linear;
+    }
+
+    @keyframes spin {
+      0% { transform: translate(-50%, -50%) rotateY(0deg); }
+      100% { transform: translate(-50%, -50%) rotateY(360deg); }
     }
 
     #spin-container img {
@@ -83,8 +91,10 @@
       height: 240px;
       object-fit: cover;
       border-radius: 10px;
-      box-shadow: none;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
       transform-style: preserve-3d;
+      backface-visibility: visible;
+      transition: transform 0.5s ease;
     }
 
     /* Ground (opcional) */
@@ -167,19 +177,49 @@
       transform: translateY(-2px);
     }
 
-    /* Musica centrada */
+    /* Musica centrada - POSICIÓN CORREGIDA */
     #music-container {
       position: fixed;
-      bottom: 20px;
+      bottom: 15px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 10;
+      z-index: 100;
       width: 90%;
       max-width: 300px;
+      background: rgba(0, 0, 0, 0.7);
+      border-radius: 50px;
+      padding: 10px 15px;
+      box-shadow: 0 4px 15px rgba(247, 101, 145, 0.4);
     }
 
     #bg-music {
       width: 100%;
+      height: 40px;
+    }
+
+    /* Estilos personalizados para el reproductor de audio */
+    audio::-webkit-media-controls-panel {
+      background: linear-gradient(135deg, #f76591, #ff8e6e);
+    }
+
+    audio::-webkit-media-controls-play-button {
+      background-color: #fff;
+      border-radius: 50%;
+    }
+
+    audio::-webkit-media-controls-current-time-display,
+    audio::-webkit-media-controls-time-remaining-display {
+      color: #fff;
+    }
+
+    /* Indicador de carga para imágenes */
+    .image-loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: white;
+      font-size: 16px;
+      background: #333;
     }
 
     /* Media queries para tablets y pantallas más grandes */
@@ -187,7 +227,7 @@
       .main-container {
         flex-direction: row;
         height: 100vh;
-        padding: 0;
+        padding: 80px 0 0; /* Espacio para la música */
       }
       
       .carousel-container {
@@ -218,17 +258,55 @@
       #music-container {
         top: 20px;
         bottom: auto;
-        width: auto;
+        width: 300px;
+        background: rgba(0, 0, 0, 0.7);
       }
     }
+
+    /* Efecto de corazones flotantes */
+    .floating-hearts:before {
+      content: "❤";
+      position: absolute;
+      color: rgba(247, 101, 145, 0.5);
+      font-size: 20px;
+      animation: float 8s ease-in infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 0.8; }
+      100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+    }
+
+    /* Generar múltiples corazones */
+    .floating-hearts:before {
+      left: 10%;
+      animation-delay: 0s;
+    }
+
+    .floating-hearts:after {
+      content: "❤";
+      position: absolute;
+      color: rgba(255, 193, 111, 0.5);
+      font-size: 24px;
+      left: 20%;
+      animation: float 10s ease-in infinite;
+      animation-delay: 2s;
+    }
+
+    /* Añadir más corazones con JavaScript */
   </style>
 </head>
 <body>
   <div class="heart-background"></div>
 
-  <!-- Musica centrada -->
+  <!-- Musica centrada - CON AUTOPLAY Y CONTROLES -->
   <div id="music-container">
-    <audio id="bg-music" src="july.mp3" controls autoplay loop></audio>
+    <audio id="bg-music" controls autoplay loop>
+      <source src="july.mp3" type="audio/mp3">
+      Tu navegador no soporta el elemento de audio.
+    </audio>
   </div>
 
   <main class="main-container">
@@ -236,12 +314,13 @@
     <div class="carousel-container">
       <div id="drag-container">
         <div id="spin-container">
-          <img src="july1.jpg" alt="">
-          <img src="july2.jpg" alt="">
-          <img src="july3.jpg" alt="">
-          <img src="july4.jpg" alt="">
-          <img src="july5.jpg" alt="">
-          <img src="july6.jpg" alt="">
+          <!-- Tus imágenes reales -->
+          <img src="july1.jpg" alt="Imagen 1" onerror="this.src='https://placehold.co/220x300/f76591/white?text=Imagen+1'">
+          <img src="july2.jpg" alt="Imagen 2" onerror="this.src='https://placehold.co/220x300/ff8e6e/white?text=Imagen+2'">
+          <img src="july3.jpg" alt="Imagen 3" onerror="this.src='https://placehold.co/220x300/ffc16f/white?text=Imagen+3'">
+          <img src="july4.jpg" alt="Imagen 4" onerror="this.src='https://placehold.co/220x300/f76591/white?text=Imagen+4'">
+          <img src="july5.jpg" alt="Imagen 5" onerror="this.src='https://placehold.co/220x300/ff8e6e/white?text=Imagen+5'">
+          <img src="july6.jpg" alt="Imagen 6" onerror="this.src='https://placehold.co/220x300/ffc16f/white?text=Imagen+6'">
         </div>
         <div id="ground"></div>
       </div>
@@ -262,155 +341,247 @@
           Con aprecio,<br>
           <span class="signature">Tu amigo</span>       
         </p>
-        <button class="btn">Julisa Mora❤️</button>
+        <button class="btn" onclick="playMusic()">Julisa Mora❤️</button>
       </div>
     </div>
   </main>
 
   <div class="floating-hearts"></div>
   <script>
-    // Variables ajustadas para móviles
-    var radius = window.innerWidth < 768 ? 180 : 280;
-    var autoRotate = true;
-    var rotateSpeed = 20;
-    var imgWidth = window.innerWidth < 768 ? 180 : 220;
-    var imgHeight = window.innerWidth < 768 ? 240 : 300;
+    document.addEventListener('DOMContentLoaded', function() {
+      // Variables ajustadas para móviles
+      var radius = window.innerWidth < 768 ? 180 : 280;
+      var autoRotate = true;
+      var rotateSpeed = 60; // Velocidad de rotación más lenta para mejor visualización
+      var imgWidth = window.innerWidth < 768 ? 180 : 220;
+      var imgHeight = window.innerWidth < 768 ? 240 : 300;
 
-    var odrag = document.getElementById('drag-container');
-    var ospin = document.getElementById('spin-container');
-    var aImg = ospin.getElementsByTagName('img');
-    var aEle = [...aImg];
+      var odrag = document.getElementById('drag-container');
+      var ospin = document.getElementById('spin-container');
+      var aImg = ospin.getElementsByTagName('img');
+      var aEle = [...aImg];
 
-    ospin.style.width = imgWidth + "px";
-    ospin.style.height = imgHeight + "px";
-
-    var ground = document.getElementById('ground');
-    ground.style.width = radius * 3 + "px";
-    ground.style.height = radius * 3 + "px";
-
-    var tX = 0, tY = 10, desX = 0, desY = 0, sX, sY, nX, nY;
-
-    function init(delayTime){
-      for(var i=0;i<aEle.length;i++){
-        aEle[i].style.transform = `rotateY(${i*(360/aEle.length)}deg) translateZ(${radius}px)`;
-        aEle[i].style.transition = `transform 1s`;
-        aEle[i].style.transitionDelay = (delayTime || (aEle.length-i)/4) + 's';
-      }
-    }
-
-    function applyTransform(obj){
-      if(tY>180) tY=180;
-      if(tY<0) tY=0;
-      obj.style.transform = `rotateX(${-tY}deg) rotateY(${tX}deg)`;
-    }
-
-    function playSpin(yes){
-      ospin.style.animationPlayState = yes?'running':'paused';
-    }
-
-    // Animación rotación automática
-    if(autoRotate){
-      let deg = 0;
-      setInterval(()=>{
-        deg += rotateSpeed * 0.017;
-        tX = deg;
-        applyTransform(odrag);
-      },17);
-    }
-
-    // Eventos táctiles para móviles
-    document.addEventListener('touchstart', handleStart, false);
-    document.addEventListener('touchmove', handleMove, false);
-    document.addEventListener('touchend', handleEnd, false);
-
-    var xDown = null;
-    var yDown = null;
-
-    function handleStart(evt) {
-      clearInterval(odrag.timer);
-      const firstTouch = evt.touches[0];
-      xDown = firstTouch.clientX;
-      yDown = firstTouch.clientY;
-    }
-
-    function handleMove(evt) {
-      if (!xDown || !yDown) return;
+      // Verificar si las imágenes se cargaron correctamente
+      var imagesLoaded = 0;
+      var totalImages = aEle.length;
       
-      var xUp = evt.touches[0].clientX;
-      var yUp = evt.touches[0].clientY;
-      
-      var xDiff = xDown - xUp;
-      var yDiff = yDown - yUp;
-      
-      tX += xDiff * 0.1;
-      tY += yDiff * 0.1;
-      applyTransform(odrag);
-      
-      xDown = xUp;
-      yDown = yUp;
-    }
-
-    function handleEnd() {
-      odrag.timer = setInterval(()=>{
-        desX *= 0.95; desY *= 0.95;
-        tX += desX*0.1; tY += desY*0.1;
-        applyTransform(odrag);
-        playSpin(false);
-        if(Math.abs(desX)<0.5 && Math.abs(desY)<0.5){
-          clearInterval(odrag.timer);
-          playSpin(true);
-        }
-      },17);
-      xDown = null;
-      yDown = null;
-    }
-
-    // Eventos ratón para desktop
-    document.onpointerdown = function(e){
-      clearInterval(odrag.timer);
-      sX = e.clientX; sY = e.clientY;
-
-      this.onpointermove = function(e){
-        nX = e.clientX; nY = e.clientY;
-        desX = nX - sX;
-        desY = nY - sY;
-        tX += desX*0.1;
-        tY += desY*0.1;
-        applyTransform(odrag);
-        sX = nX; sY = nY;
-      }
-
-      this.onpointerup = function(e){
-        odrag.timer = setInterval(()=>{
-          desX *= 0.95; desY *= 0.95;
-          tX += desX*0.1; tY += desY*0.1;
-          applyTransform(odrag);
-          playSpin(false);
-          if(Math.abs(desX)<0.5 && Math.abs(desY)<0.5){
-            clearInterval(odrag.timer);
-            playSpin(true);
+      for (var i = 0; i < aEle.length; i++) {
+        aEle[i].onload = function() {
+          imagesLoaded++;
+          if (imagesLoaded === totalImages) {
+            init(1);
           }
-        },17);
-        this.onpointermove = this.onpointerup = null;
+        };
+        
+        // Si hay error al cargar, usar placeholder
+        aEle[i].onerror = function() {
+          imagesLoaded++;
+          if (imagesLoaded === totalImages) {
+            init(1);
+          }
+        };
+        
+        // Si la imagen ya está cargada
+        if (aEle[i].complete) {
+          imagesLoaded++;
+          if (imagesLoaded === totalImages) {
+            init(1);
+          }
+        }
       }
-      return false;
-    }
 
-    // Ajustar al redimensionar
-    window.addEventListener('resize', function() {
-      radius = window.innerWidth < 768 ? 180 : 280;
-      imgWidth = window.innerWidth < 768 ? 180 : 220;
-      imgHeight = window.innerWidth < 768 ? 240 : 300;
-      
+      // Si no hay imágenes, inicializar de todos modos
+      if (totalImages === 0) {
+        init(1);
+      }
+
+      // Ajustar el tamaño del contenedor y las imágenes
       ospin.style.width = imgWidth + "px";
       ospin.style.height = imgHeight + "px";
+      
+      for (var i = 0; i < aEle.length; i++) {
+        aEle[i].style.width = imgWidth + "px";
+        aEle[i].style.height = imgHeight + "px";
+      }
+
+      var ground = document.getElementById('ground');
       ground.style.width = radius * 3 + "px";
       ground.style.height = radius * 3 + "px";
-      
-      init(1);
+
+      // Inicializar la posición de las imágenes
+      function init(delayTime) {
+        for (var i = 0; i < aEle.length; i++) {
+          aEle[i].style.transform = `rotateY(${i * (360 / aEle.length)}deg) translateZ(${radius}px)`;
+          aEle[i].style.transition = `transform 1s`;
+          aEle[i].style.transitionDelay = delayTime || (aEle.length - i) / 4 + 's';
+        }
+      }
+
+      // Aplicar transformación
+      function applyTransform(obj) {
+        if (tY > 180) tY = 180;
+        if (tY < 0) tY = 0;
+        obj.style.transform = `rotateX(${-tY}deg) rotateY(${tX}deg)`;
+      }
+
+      // Variables para el control de rotación
+      var tX = 0, tY = 10, desX = 0, desY = 0, sX, sY, nX, nY;
+      var animationInterval;
+
+      // Animación de rotación automática
+      if (autoRotate) {
+        startAutoRotation();
+      }
+
+      function startAutoRotation() {
+        animationInterval = setInterval(function() {
+          tX += rotateSpeed * 0.017;
+          applyTransform(ospin);
+        }, 30);
+      }
+
+      // Eventos táctiles para móviles
+      var xDown = null;
+      var yDown = null;
+
+      document.addEventListener('touchstart', handleTouchStart, false);
+      document.addEventListener('touchmove', handleTouchMove, false);
+      document.addEventListener('touchend', handleTouchEnd, false);
+
+      function handleTouchStart(evt) {
+        clearInterval(animationInterval);
+        const firstTouch = evt.touches[0];
+        xDown = firstTouch.clientX;
+        yDown = firstTouch.clientY;
+      }
+
+      function handleTouchMove(evt) {
+        if (!xDown || !yDown) {
+          return;
+        }
+
+        var xUp = evt.touches[0].clientX;
+        var yUp = evt.touches[0].clientY;
+
+        var xDiff = xDown - xUp;
+        var yDiff = yDown - yUp;
+
+        tX -= xDiff * 0.5;
+        tY += yDiff * 0.5;
+
+        applyTransform(ospin);
+
+        xDown = xUp;
+        yDown = yUp;
+      }
+
+      function handleTouchEnd() {
+        // Reiniciar la rotación automática después de interactuar
+        if (autoRotate) {
+          clearInterval(animationInterval);
+          startAutoRotation();
+        }
+      }
+
+      // Eventos de ratón para desktop
+      odrag.onmousedown = function(e) {
+        clearInterval(animationInterval);
+        sX = e.clientX;
+        sY = e.clientY;
+
+        this.onmousemove = function(e) {
+          nX = e.clientX;
+          nY = e.clientY;
+          desX = nX - sX;
+          desY = nY - sY;
+          tX += desX * 0.1;
+          tY += desY * 0.1;
+          applyTransform(ospin);
+          sX = nX;
+          sY = nY;
+        };
+
+        this.onmouseup = function() {
+          this.onmousemove = this.onmouseup = null;
+          // Reiniciar la rotación automática
+          if (autoRotate) {
+            clearInterval(animationInterval);
+            startAutoRotation();
+          }
+        };
+      };
+
+      // Ajustar al redimensionar la ventana
+      window.addEventListener('resize', function() {
+        radius = window.innerWidth < 768 ? 180 : 280;
+        imgWidth = window.innerWidth < 768 ? 180 : 220;
+        imgHeight = window.innerWidth < 768 ? 240 : 300;
+        
+        ospin.style.width = imgWidth + "px";
+        ospin.style.height = imgHeight + "px";
+        
+        for (var i = 0; i < aEle.length; i++) {
+          aEle[i].style.width = imgWidth + "px";
+          aEle[i].style.height = imgHeight + "px";
+        }
+        
+        ground.style.width = radius * 3 + "px";
+        ground.style.height = radius * 3 + "px";
+        
+        init(0.5);
+      });
+
+      // Crear corazones flotantes
+      createHearts();
     });
 
-    init();
+    // Función para crear corazones flotantes
+    function createHearts() {
+      const heartsContainer = document.querySelector('.floating-hearts');
+      const colors = ['#f76591', '#ff8e6e', '#ffc16f', '#ff6b6b', '#ff9ff3'];
+      
+      for (let i = 0; i < 15; i++) {
+        const heart = document.createElement('div');
+        heart.innerHTML = '❤';
+        heart.style.position = 'fixed';
+        heart.style.fontSize = Math.random() * 20 + 15 + 'px';
+        heart.style.color = colors[Math.floor(Math.random() * colors.length)];
+        heart.style.opacity = '0.7';
+        heart.style.zIndex = '-1';
+        heart.style.left = Math.random() * 100 + '%';
+        heart.style.top = '100vh';
+        heart.style.animation = `float ${Math.random() * 10 + 8}s ease-in infinite`;
+        heart.style.animationDelay = Math.random() * 5 + 's';
+        
+        heartsContainer.appendChild(heart);
+      }
+    }
+
+    // Función para reproducir música
+    function playMusic() {
+      const audio = document.getElementById('bg-music');
+      if (audio.paused) {
+        audio.play().catch(e => {
+          console.log("La reproducción automática fue prevenida: ", e);
+        });
+      }
+    }
+
+    // Iniciar música automáticamente (con manejo de errores)
+    window.addEventListener('load', function() {
+      const audio = document.getElementById('bg-music');
+      audio.volume = 0.7; // Volumen al 70%
+      
+      // Intentar reproducir automáticamente
+      const playPromise = audio.play();
+      
+      if (playPromise !== undefined) {
+        playPromise.catch(error => {
+          // La reproducción automática falló, mostrar mensaje
+          console.log("La reproducción automática fue prevenida: ", error);
+        });
+      }
+    });
   </script>
 </body>
 </html>
