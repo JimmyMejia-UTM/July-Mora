@@ -1,0 +1,168 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Quicksand:wght@300..700&display=swap");
+
+*,
+*:before,
+*:after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
+}
+
+body {
+  background: linear-gradient(145deg, #2d2e3f 0%, #0c0c13 76%);
+  min-height: 100vh;
+  overflow-x: hidden;
+  perspective: 1000px;
+}
+
+.heart-background {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23f7659150' d='M10,3.3C8.5-1.1,0.8-0.8,0.8,4.8c0,5.6,9.2,11.2,9.2,11.2s9.2-5.6,9.2-11.2C19.2-0.8,11.5-1.1,10,3.3z'/%3E%3C/svg%3E");
+  z-index: -1;
+  opacity: 0.3;
+}
+
+.floating-hearts {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+/* CARRUSEL */
+.carousel-container {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#drag-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+}
+
+#spin-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform-style: preserve-3d;
+  transform: translate(-50%, -50%);
+}
+
+#spin-container img {
+  position: absolute;
+  width: 220px; /* más grande */
+  height: 300px; /* más grande */
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: none;
+  transform-style: preserve-3d;
+}
+
+/* Ground (opcional) */
+#ground {
+  width: 900px;
+  height: 900px;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translate(-50%,-50%) rotateX(90deg);
+  background: radial-gradient(circle farthest-side, #9993, transparent);
+}
+
+/* CARTA */
+.content-container {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px;
+}
+
+.content {
+  width: 100%;
+  padding: 20px;
+  color: #e7e7e7;
+  text-align: justify;
+  background: rgba(13, 10, 11, 0.7);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(247, 101, 145, 0.2);
+  backdrop-filter: blur(10px);
+}
+
+.content h1 {
+  font-family: "Dancing Script", cursive;
+  font-size: clamp(2.5rem, 4vw, 4rem);
+  font-weight: 700;
+  background: linear-gradient(to right, #f76591, #ffc16f);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1.1;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.content p {
+  font-size: clamp(1rem, 2.5vw, 1.2rem);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.signature {
+  display: block;
+  text-align: right;
+  font-weight: bold;
+  color: #ffc16f;
+  margin-top: 15px;
+}
+
+.btn {
+  background: linear-gradient(135deg, #f76591, #ff8e6e);
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  width: 100%;
+  outline: 0;
+  border: 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(247, 101, 145, 0.4);
+  padding: 14px 20px;
+  margin-top: 20px;
+  text-align: center;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn:hover {
+  box-shadow: 0 6px 20px rgba(247, 101, 145, 0.6);
+  transform: translateY(-2px);
+}
+
+/* Musica centrada */
+#music-container {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+}
