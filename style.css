@@ -13,18 +13,7 @@ body {
   background: linear-gradient(145deg, #2d2e3f 0%, #0c0c13 76%);
   min-height: 100vh;
   overflow-x: hidden;
-  perspective: 1000px;
-}
-
-.heart-background {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Cpath fill='%23f7659150' d='M10,3.3C8.5-1.1,0.8-0.8,0.8,4.8c0,5.6,9.2,11.2,9.2,11.2s9.2-5.6,9.2-11.2C19.2-0.8,11.5-1.1,10,3.3z'/%3E%3C/svg%3E");
-  z-index: -1;
-  opacity: 0.3;
+  position: relative;
 }
 
 .floating-hearts {
@@ -40,44 +29,37 @@ body {
 .main-container {
   display: flex;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  gap: 40px;
 }
 
-/* CARRUSEL */
 .carousel-container {
-  width: 50%;
-  height: 100%;
+  flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
+  perspective: 1000px;
 }
 
-#drag-container {
-  width: 100%;
-  height: 100%;
+#drag-container, #spin-container {
   position: relative;
+  width: 300px;
+  height: 420px;
   transform-style: preserve-3d;
-}
-
-#spin-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform-style: preserve-3d;
-  transform: translate(-50%, -50%);
 }
 
 #spin-container img {
   position: absolute;
-  width: 220px; /* más grande */
-  height: 300px; /* más grande */
+  left: 0;
+  top: 0;
+  width: 200px;
+  height: 300px;
   object-fit: cover;
-  border-radius: 10px;
-  box-shadow: none;
-  transform-style: preserve-3d;
 }
 
-/* Ground (opcional) */
 #ground {
   width: 900px;
   height: 900px;
@@ -85,21 +67,22 @@ body {
   top: 100%;
   left: 50%;
   transform: translate(-50%,-50%) rotateX(90deg);
-  background: radial-gradient(circle farthest-side, #9993, transparent);
+  background: radial-gradient(circle, rgba(153,153,153,0.2), transparent);
 }
 
-/* CARTA */
+#music-container {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .content-container {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 40px;
+  flex: 1;
+  max-width: 600px;
 }
 
 .content {
-  width: 100%;
   padding: 20px;
   color: #e7e7e7;
   text-align: justify;
@@ -158,11 +141,22 @@ body {
   transform: translateY(-2px);
 }
 
-/* Musica centrada */
-#music-container {
-  position: absolute;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 10;
+/* MEDIA QUERIES PARA MÓVILES */
+@media (max-width: 768px) {
+  .main-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .carousel-container,
+  .content-container {
+    width: 90%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+
+  #spin-container img {
+    width: 180px;
+    height: 240px;
+  }
 }
